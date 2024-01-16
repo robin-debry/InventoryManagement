@@ -3,13 +3,13 @@
 #include <string.h>
 #include "file_operations.h"
 
-struct Product {
+struct Product
+{
     int productId;
     char name[50];
     int quantity;
     float price;
 };
-
 
 // Function prototypes
 void displayMenu();
@@ -19,91 +19,108 @@ void searchRecord(FILE *file);
 void updateRecord(FILE *file);
 void deleteRecord(FILE *file);
 
-
-
-
-int getValidIntForID() {
+int getValidIntForID()
+{
     int value;
-    while (1) {
-        if (scanf("%d", &value) == 1) {
+    while (1)
+    {
+        if (scanf("%d", &value) == 1)
+        {
             // Valid integer entered
             break;
-        } else {
+        }
+        else
+        {
             // Invalid input, clear input buffer
-            while (getchar() != '\n');
+            while (getchar() != '\n')
+                ;
             printf("Invalid input. Please enter an integer for the ID.\n");
         }
     }
     return value;
 }
 
-int getValidIntForQuantity() {
+int getValidIntForQuantity()
+{
     int value;
-    while (1) {
-        if (scanf("%d", &value) == 1) {
+    while (1)
+    {
+        if (scanf("%d", &value) == 1)
+        {
             // Valid integer entered
             break;
-        } else {
+        }
+        else
+        {
             // Invalid input, clear input buffer
-            while (getchar() != '\n');
+            while (getchar() != '\n')
+                ;
             printf("Invalid input. Please enter an integer for the Quantity.\n");
         }
     }
     return value;
 }
 
-float getValidFloatForPrice() {
+float getValidFloatForPrice()
+{
     float value;
-    while (1) {
-        if (scanf("%f", &value) == 1) {
+    while (1)
+    {
+        if (scanf("%f", &value) == 1)
+        {
             // Valid integer entered
             break;
-        } else {
+        }
+        else
+        {
             // Invalid input, clear input buffer
-            while (getchar() != '\n');
+            while (getchar() != '\n')
+                ;
             printf("Invalid input. Please enter an float for the Price.\n");
         }
     }
     return value;
 }
 
-
-
-int main() {
+int main()
+{
     FILE *file;
     int choice;
 
     file = fopen("inventory.dat", "rb+");
 
-    if (file == NULL) {
+    if (file == NULL)
+    {
         file = fopen("inventory.dat", "wb+");
     }
 
-    do {
+    do
+    {
         displayMenu();
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
-        switch (choice) {
-            case 1:
-                addRecord(file);
-                break;
-            case 2:
-                viewRecord(file);
-                break;
-            case 3:
-                searchRecord(file);
-                break;
-            case 4:
-                updateRecord(file);
-                break;
-            case 5:
-                deleteRecord(file);
-                break;
-            case 6:
-                break;
-            default:
-                printf("Invalid choice. Please try again.\n");
+        switch (choice)
+        {
+        case 1:
+            addRecord(file);
+            break;
+        case 2:
+            viewRecord(file);
+            break;
+        case 3:
+            searchRecord(file);
+            break;
+        case 4:
+            updateRecord(file);
+            break;
+        case 5:
+            deleteRecord(file);
+            break;
+        case 6:
+            break;
+        default:
+            printf("Invalid choice. Please try again.\n");
         }
     } while (choice != 6);
 
@@ -112,8 +129,8 @@ int main() {
     return 0;
 }
 
-void displayMenu() {
-
+void displayMenu()
+{
 
     // Display the menu
     printf("\n===== Inventory Management System =====\n");
@@ -123,11 +140,10 @@ void displayMenu() {
     printf("4. Update Record\n");
     printf("5. Delete Record\n");
     printf("6. Exit\n");
-
-    
 }
 
-void addRecord(FILE *file) {
+void addRecord(FILE *file)
+{
     struct Product newProduct;
 
     // Get input for the new product record
@@ -146,13 +162,15 @@ void addRecord(FILE *file) {
     printf("Record added successfully.\n");
 }
 
-void viewRecord(FILE *file) {
+void viewRecord(FILE *file)
+{
     struct Product currentProduct;
 
     // Read and display all product records in the file
-    rewind(file);  // Move file pointer to the beginning
+    rewind(file); // Move file pointer to the beginning
 
-    while (fread(&currentProduct, sizeof(struct Product), 1, file) == 1) {
+    while (fread(&currentProduct, sizeof(struct Product), 1, file) == 1)
+    {
         printf("-----------------------------\n");
         printf("Product ID: %d\n", currentProduct.productId);
         printf("Product Name: %s\n", currentProduct.name);
@@ -162,7 +180,8 @@ void viewRecord(FILE *file) {
     }
 }
 
-void searchRecord(FILE *file) {
+void searchRecord(FILE *file)
+{
     int searchId;
     struct Product currentProduct;
     int found = 0;
@@ -173,24 +192,28 @@ void searchRecord(FILE *file) {
     // Search for the product with the given ID
     rewind(file);
 
-    while (fread(&currentProduct, sizeof(struct Product), 1, file) == 1) {
-        if (currentProduct.productId == searchId) {
+    while (fread(&currentProduct, sizeof(struct Product), 1, file) == 1)
+    {
+        if (currentProduct.productId == searchId)
+        {
             found = 1;
             printf("Product found:\n");
             printf("Product ID: %d\n", currentProduct.productId);
             printf("Product Name: %s\n", currentProduct.name);
             printf("Quantity: %d\n", currentProduct.quantity);
             printf("Price: %.2f\n", currentProduct.price);
-            break;  // Exit loop when the product is found
+            break; // Exit loop when the product is found
         }
     }
 
-    if (!found) {
+    if (!found)
+    {
         printf("Product not found.\n");
     }
 }
 
-void updateRecord(FILE *file) {
+void updateRecord(FILE *file)
+{
     int updateId;
     struct Product currentProduct;
     int found = 0;
@@ -201,8 +224,10 @@ void updateRecord(FILE *file) {
     // Search for the product with the given ID
     rewind(file);
 
-    while (fread(&currentProduct, sizeof(struct Product), 1, file) == 1) {
-        if (currentProduct.productId == updateId) {
+    while (fread(&currentProduct, sizeof(struct Product), 1, file) == 1)
+    {
+        if (currentProduct.productId == updateId)
+        {
             found = 1;
             printf("Enter new Product Name: ");
             scanf("%s", currentProduct.name);
@@ -212,21 +237,23 @@ void updateRecord(FILE *file) {
             scanf("%f", &currentProduct.price);
 
             // Move the file pointer back by the size of a product record
-            fseek(file, -sizeof(struct Product), SEEK_CUR);
+            fseek(file, -(long)sizeof(struct Product), SEEK_CUR);
 
             // Write the updated product record to the file
             fwrite(&currentProduct, sizeof(struct Product), 1, file);
             printf("Record updated successfully.\n");
-            break;  // Exit loop when the product is found and updated
+            break; // Exit loop when the product is found and updated
         }
     }
 
-    if (!found) {
+    if (!found)
+    {
         printf("Product not found.\n");
     }
 }
 
-void deleteRecord(FILE *file) {
+void deleteRecord(FILE *file)
+{
     int deleteId;
     struct Product currentProduct;
     FILE *tempFile;
@@ -238,8 +265,10 @@ void deleteRecord(FILE *file) {
     tempFile = fopen("temp.dat", "wb");
     rewind(file);
 
-    while (fread(&currentProduct, sizeof(struct Product), 1, file) == 1) {
-        if (currentProduct.productId != deleteId) {
+    while (fread(&currentProduct, sizeof(struct Product), 1, file) == 1)
+    {
+        if (currentProduct.productId != deleteId)
+        {
             fwrite(&currentProduct, sizeof(struct Product), 1, tempFile);
         }
     }
