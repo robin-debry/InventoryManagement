@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "file_operations.h"
+#include "backend.h"
 
 struct Product
 {
@@ -118,11 +118,31 @@ int main()
             deleteRecord(file);
             break;
         case 6:
+        {
+            list_files(directory);
+            break;
+        }
+        case 7:
+        {
+            create_file(filename, content);
+            break;
+        }
+        case 8:
+        {   
+            delete_file(filename);
+            break;
+        }
+        case 9:
+        {
+            search_files(directory, criteria);
+            break;
+        }
+        case 10:
             break;
         default:
             printf("Invalid choice. Please try again.\n");
         }
-    } while (choice != 6);
+    } while (choice != 10);
 
     fclose(file);
 
@@ -139,7 +159,11 @@ void displayMenu()
     printf("3. Search Record\n");
     printf("4. Update Record\n");
     printf("5. Delete Record\n");
-    printf("6. Exit\n");
+    printf("6. List files in a directory\n");
+    printf("7. Create a new file\n");
+    printf("8. Delete a file\n");
+    printf("9. Search for files\n");
+    printf("10. Exit\n");
 }
 
 void addRecord(FILE *file)
@@ -149,7 +173,7 @@ void addRecord(FILE *file)
     // Get input for the new product record
     printf("Enter Product ID: ");
     newProduct.productId = getValidIntForID();
-    printf("Enter Product Name without space: ");
+    printf("Enter Product Name: ");
     scanf("%s", newProduct.name);
     printf("Enter Quantity: ");
     newProduct.quantity = getValidIntForQuantity();
@@ -171,7 +195,6 @@ void viewRecord(FILE *file)
 
     while (fread(&currentProduct, sizeof(struct Product), 1, file) == 1)
     {
-        printf("-----------------------------\n");
         printf("Product ID: %d\n", currentProduct.productId);
         printf("Product Name: %s\n", currentProduct.name);
         printf("Quantity: %d\n", currentProduct.quantity);
@@ -237,7 +260,7 @@ void updateRecord(FILE *file)
             scanf("%f", &currentProduct.price);
 
             // Move the file pointer back by the size of a product record
-            fseek(file, -(long)sizeof(struct Product), SEEK_CUR);
+            fseek(file, -sizeof(struct Product), SEEK_CUR);
 
             // Write the updated product record to the file
             fwrite(&currentProduct, sizeof(struct Product), 1, file);

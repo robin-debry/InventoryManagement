@@ -119,45 +119,21 @@ int main()
             break;
         case 6:
         {
-            char directory[256];
-            printf("Enter the directory path: ");
-            fgets(directory, sizeof(directory), stdin);
-            directory[strcspn(directory, "\n")] = '\0'; // Remove newline character
             list_files(directory);
             break;
         }
         case 7:
         {
-            char filename[256];
-            char content[256];
-            printf("Enter the file name: ");
-            fgets(filename, sizeof(filename), stdin);
-            filename[strcspn(filename, "\n")] = '\0'; // Remove newline character
-            printf("Enter the file content: ");
-            fgets(content, sizeof(content), stdin);
-            content[strcspn(content, "\n")] = '\0'; // Remove newline character
             create_file(filename, content);
             break;
         }
         case 8:
-        {
-            char filename[256];
-            printf("Enter the file name to delete: ");
-            fgets(filename, sizeof(filename), stdin);
-            filename[strcspn(filename, "\n")] = '\0'; // Remove newline character
+        {   
             delete_file(filename);
             break;
         }
         case 9:
         {
-            char directory[256];
-            char criteria[256];
-            printf("Enter the directory path: ");
-            fgets(directory, sizeof(directory), stdin);
-            directory[strcspn(directory, "\n")] = '\0'; // Remove newline character
-            printf("Enter the search criteria: ");
-            fgets(criteria, sizeof(criteria), stdin);
-            criteria[strcspn(criteria, "\n")] = '\0'; // Remove newline character
             search_files(directory, criteria);
             break;
         }
@@ -166,7 +142,7 @@ int main()
         default:
             printf("Invalid choice. Please try again.\n");
         }
-    } while (choice != 6);
+    } while (choice != 10);
 
     fclose(file);
 

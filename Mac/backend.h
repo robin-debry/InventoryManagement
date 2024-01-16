@@ -11,8 +11,16 @@ void create_file(const char *filename, const char *content);
 void delete_file(const char *filename);
 void search_files(const char *directory, const char *criteria);
 
+char directory[256];
+char filename[256];
+char content[256];
+char criteria[256];
+
 // Function to list files in a directory
 void list_files(const char *directory) {
+
+    printf("Enter the directory path: ");
+    scanf("%s", directory);
     DIR *dir;
     struct dirent *entry;
 
@@ -30,6 +38,10 @@ void list_files(const char *directory) {
 
 // Function to create a new file
 void create_file(const char *filename, const char *content) {
+    printf("Enter the file name: ");
+    scanf("%255s", filename); // Reading a string with scanf, limiting to 255 characters
+    printf("Enter the file content: ");
+    scanf("%255s", content); // Reading a string with scanf, limiting to 255 characters
     FILE *file = fopen(filename, "w");
     
     if (file != NULL) {
@@ -43,6 +55,8 @@ void create_file(const char *filename, const char *content) {
 
 // Function to delete a file
 void delete_file(const char *filename) {
+    printf("Enter the file name to delete: ");
+    scanf("%255s", filename); // Reading a string with scanf, limiting to 255 characters
     if (remove(filename) == 0) {
         printf("File '%s' deleted successfully.\n", filename);
     } else {
@@ -54,6 +68,10 @@ void delete_file(const char *filename) {
 void search_files(const char *directory, const char *criteria) {
     char search_pattern[256];
     snprintf(search_pattern, sizeof(search_pattern), "%s/%s", directory, criteria);
+    printf("Enter the directory path: ");
+    scanf("%255s", directory); // Reading a string with scanf, limiting to 255 characters
+    printf("Enter the search criteria: ");
+    scanf("%255s", criteria); // Reading a string with scanf, limiting to 255 characters
 
     glob_t glob_result;
     if (glob(search_pattern, 0, NULL, &glob_result) == 0) {
