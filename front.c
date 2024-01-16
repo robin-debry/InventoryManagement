@@ -10,6 +10,7 @@ struct Product {
     float price;
 };
 
+
 // Function prototypes
 void displayMenu();
 void addRecord(FILE *file);
@@ -17,6 +18,55 @@ void viewRecord(FILE *file);
 void searchRecord(FILE *file);
 void updateRecord(FILE *file);
 void deleteRecord(FILE *file);
+
+
+
+int getValidIntForID() {
+    int value;
+    while (1) {
+        if (scanf("%d", &value) == 1) {
+            // Valid integer entered
+            break;
+        } else {
+            // Invalid input, clear input buffer
+            while (getchar() != '\n');
+            printf("Invalid input. Please enter an integer for the ID.\n");
+        }
+    }
+    return value;
+}
+
+int getValidIntForQuantity() {
+    int value;
+    while (1) {
+        if (scanf("%d", &value) == 1) {
+            // Valid integer entered
+            break;
+        } else {
+            // Invalid input, clear input buffer
+            while (getchar() != '\n');
+            printf("Invalid input. Please enter an integer for the Quantity.\n");
+        }
+    }
+    return value;
+}
+
+float getValidFloatForPrice() {
+    float value;
+    while (1) {
+        if (scanf("%f", &value) == 1) {
+            // Valid integer entered
+            break;
+        } else {
+            // Invalid input, clear input buffer
+            while (getchar() != '\n');
+            printf("Invalid input. Please enter an float for the Price.\n");
+        }
+    }
+    return value;
+}
+
+
 
 int main() {
     FILE *file;
@@ -62,6 +112,9 @@ int main() {
 }
 
 void displayMenu() {
+
+
+    // Display the menu
     printf("\n===== Inventory Management System =====\n");
     printf("1. Add Record\n");
     printf("2. View Record\n");
@@ -69,6 +122,8 @@ void displayMenu() {
     printf("4. Update Record\n");
     printf("5. Delete Record\n");
     printf("6. Exit\n");
+
+    
 }
 
 void addRecord(FILE *file) {
@@ -76,13 +131,13 @@ void addRecord(FILE *file) {
 
     // Get input for the new product record
     printf("Enter Product ID: ");
-    scanf("%d", &newProduct.productId);
+    newProduct.productId = getValidIntForID();
     printf("Enter Product Name: ");
     scanf("%s", newProduct.name);
     printf("Enter Quantity: ");
-    scanf("%d", &newProduct.quantity);
+    newProduct.quantity = getValidIntForQuantity();
     printf("Enter Price: ");
-    scanf("%f", &newProduct.price);
+    newProduct.price = getValidFloatForPrice();
 
     // Write the new product record to the file
     fwrite(&newProduct, sizeof(struct Product), 1, file);

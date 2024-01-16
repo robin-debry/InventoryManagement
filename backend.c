@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <dirent.h>
-#include <glob.h>
 #include <file_operations.h>
 
 // Function to list files in a directory
