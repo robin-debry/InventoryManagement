@@ -21,6 +21,7 @@ void deleteRecord(FILE *file);
 
 
 
+
 int getValidIntForID() {
     int value;
     while (1) {
@@ -132,7 +133,7 @@ void addRecord(FILE *file) {
     // Get input for the new product record
     printf("Enter Product ID: ");
     newProduct.productId = getValidIntForID();
-    printf("Enter Product Name: ");
+    printf("Enter Product Name without space: ");
     scanf("%s", newProduct.name);
     printf("Enter Quantity: ");
     newProduct.quantity = getValidIntForQuantity();
@@ -152,6 +153,7 @@ void viewRecord(FILE *file) {
     rewind(file);  // Move file pointer to the beginning
 
     while (fread(&currentProduct, sizeof(struct Product), 1, file) == 1) {
+        printf("-----------------------------\n");
         printf("Product ID: %d\n", currentProduct.productId);
         printf("Product Name: %s\n", currentProduct.name);
         printf("Quantity: %d\n", currentProduct.quantity);
