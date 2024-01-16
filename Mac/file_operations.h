@@ -4,9 +4,6 @@
 #include <dirent.h>
 #include <glob.h>
 
-void list_files(const char *directory);
-void create_file(const char *filename, const char *content);
-void delete_file(const char *filename);
-void search_files(const char *directory, const char *criteria);
+
 
 #endif // FILE_OPERATIONS_H

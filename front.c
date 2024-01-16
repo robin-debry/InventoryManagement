@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "backend.h"
+#include "file_operations.h"
 
 struct Product {
     int productId;
@@ -18,7 +18,6 @@ void viewRecord(FILE *file);
 void searchRecord(FILE *file);
 void updateRecord(FILE *file);
 void deleteRecord(FILE *file);
-
 
 
 
@@ -122,7 +121,7 @@ void displayMenu() {
     printf("3. Search Record\n");
     printf("4. Update Record\n");
     printf("5. Delete Record\n");
-    printf("6. \n");
+    printf("6. Exit\n");
 
     
 }
@@ -133,7 +132,7 @@ void addRecord(FILE *file) {
     // Get input for the new product record
     printf("Enter Product ID: ");
     newProduct.productId = getValidIntForID();
-    printf("Enter Product Name without space: ");
+    printf("Enter Product Name: ");
     scanf("%s", newProduct.name);
     printf("Enter Quantity: ");
     newProduct.quantity = getValidIntForQuantity();
@@ -153,7 +152,6 @@ void viewRecord(FILE *file) {
     rewind(file);  // Move file pointer to the beginning
 
     while (fread(&currentProduct, sizeof(struct Product), 1, file) == 1) {
-        printf("-----------------------------\n");
         printf("Product ID: %d\n", currentProduct.productId);
         printf("Product Name: %s\n", currentProduct.name);
         printf("Quantity: %d\n", currentProduct.quantity);
