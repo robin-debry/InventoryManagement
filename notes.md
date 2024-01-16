@@ -6,7 +6,7 @@
 
 ### Backend
 
-- Create a command line program that allows user to perform  file operations such as 
+- Create a command line program that allows user to perform  file operations such as
 - Listing files in a directory
 - Creating new files
 - Deleting files
