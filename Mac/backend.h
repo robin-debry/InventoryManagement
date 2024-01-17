@@ -6,10 +6,10 @@
 
 
 
-void list_files(const char *directory);
-void create_file(const char *filename, const char *content);
-void delete_file(const char *filename);
-void search_files(const char *directory, const char *criteria);
+void list_files(char *directory);
+void create_file(char *filename, char *content);
+void delete_file(char *filename);
+void search_files(char *directory, char *criteria);
 
 char directory[256];
 char filename[256];
@@ -17,7 +17,7 @@ char content[256];
 char criteria[256];
 
 // Function to list files in a directory
-void list_files(const char *directory) {
+void list_files(char *directory) {
 
     printf("Enter the directory path: ");
     scanf("%s", directory);
@@ -37,7 +37,7 @@ void list_files(const char *directory) {
 }
 
 // Function to create a new file
-void create_file(const char *filename, const char *content) {
+void create_file(char *filename, char *content) {
     printf("Enter the file name: ");
     scanf("%255s", filename); // Reading a string with scanf, limiting to 255 characters
     printf("Enter the file content: ");
@@ -54,7 +54,7 @@ void create_file(const char *filename, const char *content) {
 }
 
 // Function to delete a file
-void delete_file(const char *filename) {
+void delete_file(char *filename) {
     printf("Enter the file name to delete: ");
     scanf("%255s", filename); // Reading a string with scanf, limiting to 255 characters
     if (remove(filename) == 0) {
@@ -65,7 +65,7 @@ void delete_file(const char *filename) {
 }
 
 // Function to search for files based on criteria
-void search_files(const char *directory, const char *criteria) {
+void search_files(char *directory, char *criteria) {
     char search_pattern[256];
     snprintf(search_pattern, sizeof(search_pattern), "%s/%s", directory, criteria);
     printf("Enter the directory path: ");

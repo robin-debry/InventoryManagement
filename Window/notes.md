@@ -25,8 +25,8 @@ Think about what the frontend needs
 ### FrontEnd
 
 You are developing a basic inventory management system for a store and they need a simple system to keep track of :
+Each product is represent by a record containing information such as:
 
-- Each prooduct is represent by a record containing information such ash as 
 - Product Id
 - Name
 - Quantity
@@ -52,7 +52,9 @@ the frontend is not doing the file handling
 focus on what the user needs to see create a simple UI in the console
 Make clear requests to the colleagues handling the backend
 
-General tips Split the work among the team assign a team leader.
+## General tips
+
+Split the work among the team assign a team leader.
 
 Decide on the functions that the backend implement and how the front end will use them
 Input ? Parameter ? Output ?
