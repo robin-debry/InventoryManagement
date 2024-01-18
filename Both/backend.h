@@ -2,19 +2,15 @@
 #include <stdlib.h>
 #include <string.h>
 #include <dirent.h>
-#include <glob.h>
+
 
 // Define a preprocessor directive for Windows
 #ifdef _WIN32
-#include <direct.h>
-#define getcwd _getcwd
-#define chdir _chdir
-#define mkdir _mkdir
-#define rmdir _rmdir
+#include <windows.h>
 #define PATH_SEPARATOR "\\"
 #else
 // For non-Windows platforms, assume macOS/Linux
-#include <unistd.h>
+#include <glob.h>
 #define PATH_SEPARATOR "/"
 #endif
 
@@ -77,19 +73,24 @@ void delete_file(char *filename) {
 
 // Function to search for files based on criteria
 #ifdef _WIN32
-    void search_files(char *directory, char *criteria) {
-    char search_pattern[256];
+void search_files(char *directory, char *criteria) {
+    char search_pattern[MAX_PATH];
     snprintf(search_pattern, sizeof(search_pattern), "%s\\%s", directory, criteria);
-    intptr_t handle;
-    struct _finddata_t file_data;
 
-    handle = _findfirst(search_pattern, &file_data);
+    printf("Enter the directory path: ");
+    scanf("%255s", directory);
+    printf("Enter the search criteria: ");
+    scanf("%255s", criteria);
 
-    if (handle != -1) {
+    WIN32_FIND_DATA findFileData;
+    HANDLE hFind = FindFirstFile(search_pattern, &findFileData);
+
+    if (hFind != INVALID_HANDLE_VALUE) {
         do {
-            printf("%s\\%s\n", directory, file_data.name);
-        } while (_findnext(handle, &file_data) == 0);
-        _findclose(handle);
+            printf("%s\n", findFileData.cFileName);
+        } while (FindNextFile(hFind, &findFileData) != 0);
+        
+        FindClose(hFind);
     } else {
         printf("No files found matching the criteria '%s'.\n", criteria);
     }
