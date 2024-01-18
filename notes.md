@@ -26,12 +26,12 @@ Think about what the frontend needs
 You are developing a basic inventory management system for a store and they need a simple system to keep track of :
 Each product is represent by a record containing information such as:
 
-- Product Id
-- Name
-- Quantity
+- Product ID.
+- Name.
+- Quantity.
 - Price.
 
-Read and write reports(text files
+Read and write reports(text files)
 The content is up to you
 
 Manage records(binary files)
@@ -53,7 +53,7 @@ Make clear requests to the colleagues handling the backend
 
 ## General tips
 
-split the work among the team assign a team leader.
+Split the work among the team assign a team leader.
 
 Decide on the functions that the backend implement and how the front end will use them
 Input ? Parameter ? Output ?
