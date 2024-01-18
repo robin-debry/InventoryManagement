@@ -2,15 +2,14 @@
 #include <stdlib.h>
 #include <string.h>
 #include <dirent.h>
-#include <glob.h>
+#include <windows.h>
 
 
 
-
-void list_files(const char *directory);
-void create_file(const char *filename, const char *content);
-void delete_file(const char *filename);
-void search_files(const char *directory, const char *criteria);
+void list_files(char *directory);
+void create_file(char *filename, char *content);
+void delete_file(char *filename);
+void search_files(char *directory, char *criteria);
 
 char directory[256];
 char filename[256];
@@ -18,7 +17,7 @@ char content[256];
 char criteria[256];
 
 // Function to list files in a directory
-void list_files(const char *directory) {
+void list_files(char *directory) {
 
     printf("Enter the directory path: ");
     scanf("%s", directory);
@@ -38,7 +37,7 @@ void list_files(const char *directory) {
 }
 
 // Function to create a new file
-void create_file(const char *filename, const char *content) {
+void create_file(char *filename, char *content) {
     printf("Enter the file name: ");
     scanf("%255s", filename); // Reading a string with scanf, limiting to 255 characters
     printf("Enter the file content: ");
@@ -55,7 +54,7 @@ void create_file(const char *filename, const char *content) {
 }
 
 // Function to delete a file
-void delete_file(const char *filename) {
+void delete_file(char *filename) {
     printf("Enter the file name to delete: ");
     scanf("%255s", filename); // Reading a string with scanf, limiting to 255 characters
     if (remove(filename) == 0) {
@@ -66,24 +65,29 @@ void delete_file(const char *filename) {
 }
 
 // Function to search for files based on criteria
-void search_files(const char *directory, const char *criteria) {
-    char search_pattern[256];
-    snprintf(search_pattern, sizeof(search_pattern), "%s/%s", directory, criteria);
-    printf("Enter the directory path: ");
-    scanf("%255s", directory); // Reading a string with scanf, limiting to 255 characters
-    printf("Enter the search criteria: ");
-    scanf("%255s", criteria); // Reading a string with scanf, limiting to 255 characters
+void search_files(char *directory, char *criteria) {
+    char search_pattern[MAX_PATH];
+    snprintf(search_pattern, sizeof(search_pattern), "%s\\%s", directory, criteria);
 
-    glob_t glob_result;
-    if (glob(search_pattern, 0, NULL, &glob_result) == 0) {
-        for (size_t i = 0; i < glob_result.gl_pathc; i++) {
-            printf("%s\n", glob_result.gl_pathv[i]);
-        }
-        globfree(&glob_result);
+    printf("Enter the directory path: ");
+    scanf("%255s", directory);
+    printf("Enter the search criteria: ");
+    scanf("%255s", criteria);
+
+    WIN32_FIND_DATA findFileData;
+    HANDLE hFind = FindFirstFile(search_pattern, &findFileData);
+
+    if (hFind != INVALID_HANDLE_VALUE) {
+        do {
+            printf("%s\n", findFileData.cFileName);
+        } while (FindNextFile(hFind, &findFileData) != 0);
+        
+        FindClose(hFind);
     } else {
         printf("No files found matching the criteria '%s'.\n", criteria);
     }
 }
+
 
 // int main() {
 //     while (1) {
